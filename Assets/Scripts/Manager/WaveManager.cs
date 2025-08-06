@@ -2,54 +2,44 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-[System.Serializable]
-public struct SpawnData
-{
-    public GameObject Enemy;
-    public float TimeBeforeSpawn;
-    public Transform SpawnPoint;
-    public Transform PlayerPosition;
-}
-
-[System.Serializable]
-public struct WaveData
-{
-    public float TimeBeforeWave;
-    public List<SpawnData> EnemyData;
-}
 public class WaveManager : MonoBehaviour
 {
-    public List<WaveData> waves;
-    public float EnemySpawnTime = 10f;
+
+    [SerializeField] private Transform[] spawnPoint;
+    [SerializeField] private Transform playerPosition;
+    [SerializeField] private GameObject[] enemyPrefab;
+    [SerializeField] private float spawnIntervalMin = 1f;
+    [SerializeField] private float spawnIntervalMax = 5f;
+    [SerializeField] private int minEnemiesToSpawnPerWave = 1;
+    [SerializeField] private int maxEnemiesToSpawnPerWave = 5;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InvokeRepeating(nameof(ContinouslySpawnEnemy), EnemySpawnTime, EnemySpawnTime);
+        StartWave();
     }
 
-    IEnumerator WaveStart()
+    private void Update()
     {
-        foreach (WaveData currentWave in waves)
+        
+    }
+
+    private void SpawnEnemy()
+    {
+        int spawnPointIndex = Random.Range(0, spawnPoint.Length);
+        int enemyToSpawnIndex = Random.Range(0, enemyPrefab.Length);
+        GameObject enemyInstance = Instantiate(enemyPrefab[enemyToSpawnIndex], spawnPoint[spawnPointIndex].position, Quaternion.identity);
+        enemyInstance.GetComponent<Enemy>().Initialized(playerPosition);
+    }
+
+    private void StartWave()
+    {
+        int numEnemiesToSpawn = Random.Range(minEnemiesToSpawnPerWave, maxEnemiesToSpawnPerWave);
+        for(int i = 0; i < numEnemiesToSpawn; i++)
         {
-            foreach (SpawnData currentEnemyToSpawn in currentWave.EnemyData)
-            {
-                yield return new WaitForSeconds(currentEnemyToSpawn.TimeBeforeSpawn);
-                SpawnEnemies(currentEnemyToSpawn.Enemy, currentEnemyToSpawn.SpawnPoint, currentEnemyToSpawn.PlayerPosition);
-            }
+            SpawnEnemy();
         }
-    }
-
-    public void SpawnEnemies(GameObject enemyPrefab, Transform spawnPoint, Transform endPoint)
-    {
-        GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-        EnemyStats enemy = enemyInstance.GetComponent<EnemyStats>();
-        enemy.Initialized(endPoint);
-    }
-
-    private void ContinouslySpawnEnemy()
-    {
-        StartCoroutine(WaveStart());
+        Invoke("StartWave", Random.Range(spawnIntervalMin, spawnIntervalMax));
     }
 }

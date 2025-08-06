@@ -5,7 +5,7 @@ public class PlayerMove : MonoBehaviour
     public float Speed = 6f;
 
     [SerializeField] private float rotationSpeed;
-    private Vector3 movement;
+    [SerializeField] private Vector3 movement;
     [SerializeField] private const string moveHorizontal = "Horizontal";
     [SerializeField] private const string moveVertical = "Vertical";
     [SerializeField] private const string cameraRotateAxis = "Mouse X";

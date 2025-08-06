@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 4145944041718183027}
   - component: {fileID: 4660829375462301004}
   - component: {fileID: 2754593820951767}
-  - component: {fileID: 7932143383546022482}
   - component: {fileID: 5022667992436861424}
   - component: {fileID: 4801071426789342298}
   - component: {fileID: 6291487102855224248}
+  - component: {fileID: 3006016445116675859}
   m_Layer: 3
   m_Name: BigEnemy
   m_TagString: Untagged
@@ -114,21 +114,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7932143383546022482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059205612300700275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5a4a7f80ae656c46b36e8148ed15e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHealth: 60
-  CurrentHealth: 0
-  EnemySpeed: 2
 --- !u!135 &5022667992436861424
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -142,7 +127,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -173,7 +158,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -185,3 +170,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3006016445116675859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059205612300700275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a4a7f80ae656c46b36e8148ed15e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 30
+  CurrentHealth: 0
+  ScorePoints: 50

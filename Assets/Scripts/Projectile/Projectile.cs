@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
     public float Force = 1000f;
     public float LifeTime = 5f;
 
+    [SerializeField] private int damage = 10;
     private Rigidbody projectileRb;
 
     private void Awake()
@@ -27,6 +28,15 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        if(enemy != null)
+        {
+            enemy.TakenDamage(damage);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
