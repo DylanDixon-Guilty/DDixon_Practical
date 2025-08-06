@@ -4,29 +4,31 @@ public class PlayerMove : MonoBehaviour
 {
     public float Speed = 6f;
 
+    [SerializeField] private float rotationSpeed;
     private Vector3 movement;
-    private Rigidbody playerRb;
-    private string moveHorizontal = "Horizontal";
-    private string moveVertical = "Vertical";
+    [SerializeField] private const string moveHorizontal = "Horizontal";
+    [SerializeField] private const string moveVertical = "Vertical";
+    [SerializeField] private const string cameraRotateAxis = "Mouse X";
 
-    private void Awake()
+    
+    void Update()
     {
-        playerRb = GetComponent<Rigidbody>();
+        Move();
+        Rotate();
     }
 
+    private void Rotate()
+    {
+        float rotateInput = Input.GetAxis(cameraRotateAxis);
+        transform.Rotate(Vector3.up, rotateInput * rotationSpeed * Time.deltaTime);
+    }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Move()
     {
         float horizontal = Input.GetAxisRaw(moveHorizontal);
         float vertical = Input.GetAxisRaw(moveVertical);
-        Move(horizontal, vertical);
-    }
-
-    private void Move(float horizontal, float vertical)
-    {
         movement.Set(horizontal, 0f, vertical);
         movement = movement.normalized * Speed * Time.deltaTime;
-        playerRb.MovePosition(transform.position + movement);
+        transform.Translate(movement * Speed * Time.deltaTime);
     }
 }
