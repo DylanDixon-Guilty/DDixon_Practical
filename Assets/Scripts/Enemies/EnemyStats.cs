@@ -7,7 +7,6 @@ public class EnemyStats : MonoBehaviour
     public int MaxHealth;
     public int CurrentHealth;
     public float EnemySpeed;
-    public event Action<int, int> OnEnemyHealthChange;
 
     private NavMeshAgent navAgent;
     private Transform playerPosition;
@@ -39,7 +38,6 @@ public class EnemyStats : MonoBehaviour
         if (CurrentHealth > 0)
         {
             CurrentHealth = Mathf.Max(CurrentHealth - damageAmount, 0);
-            OnEnemyHealthChange?.Invoke(CurrentHealth, MaxHealth);
         }
     }
 
